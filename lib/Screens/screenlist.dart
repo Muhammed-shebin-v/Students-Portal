@@ -49,7 +49,7 @@ class _ScreenlistState extends State<Screenlist> {
                         ),
                         trailing: ElevatedButton(
                             style: ButtonStyle(
-                                foregroundColor: MaterialStateProperty.all(
+                                foregroundColor: WidgetStateProperty.all(
                                     const Color.fromARGB(255, 238, 88, 78))),
                             onPressed: () {
                                showDialog(context: (context), builder: (ctx1){
