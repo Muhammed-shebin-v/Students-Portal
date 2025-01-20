@@ -18,8 +18,11 @@ class _ScreenlistState extends State<Screenlist> {
       body: SafeArea(
         child: ValueListenableBuilder(
         valueListenable: studentListNotifier,
-        builder: (context, List<StudentModel> studentsList, Widget? child) {
-          
+        builder: (context, List<StudentModel> studentsList, Widget? child) 
+        {
+          if(studentsList.isEmpty){
+            return const Center(child: Text('No Student Found!',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),));
+          }
           return Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: ListView.builder(
@@ -27,14 +30,14 @@ class _ScreenlistState extends State<Screenlist> {
                   //taking data from studentmodel
                   final data = studentsList[index];
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    padding: const EdgeInsets.symmetric(horizontal: 6,vertical: 4),
                     child: Card(
                       color: const Color.fromARGB(255, 174, 215, 247),
                       child: ListTile(
                         onTap: () {
                           // sending data to next page
                           Navigator.of(ctx).push(MaterialPageRoute(
-                              builder: (ctx) => screeninfo(
+                              builder: (ctx) => ScreenInfo(
                                     data: data,
                                   )));
                         },
@@ -47,10 +50,7 @@ class _ScreenlistState extends State<Screenlist> {
                               ? const Icon(Icons.person)
                               : null,
                         ),
-                        trailing: ElevatedButton(
-                            style: ButtonStyle(
-                                foregroundColor: WidgetStateProperty.all(
-                                    const Color.fromARGB(255, 238, 88, 78))),
+                        trailing:IconButton(
                             onPressed: () {
                                showDialog(context: (context), builder: (ctx1){
                                return AlertDialog(
@@ -69,8 +69,9 @@ class _ScreenlistState extends State<Screenlist> {
                                }
                                );
                                }, 
-                           child: const Icon(
+                            icon :const Icon(
                               Icons.delete,
+                              color: Colors.red,
                             )
                             ),
                       ),

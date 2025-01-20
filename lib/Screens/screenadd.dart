@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:database/db/functions/function.dart';
@@ -6,14 +7,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class addstudent extends StatefulWidget {
-  const addstudent({super.key});
+class AddStudent extends StatefulWidget {
+  const AddStudent({super.key});
 
   @override
-  State<addstudent> createState() => _MyWidgetState();
+  State<AddStudent> createState() => _MyWidgetState();
 }
 
-  class _MyWidgetState extends State<addstudent> {
+  class _MyWidgetState extends State<AddStudent> {
   final TextEditingController _controllername = TextEditingController();
   final TextEditingController _controllerage = TextEditingController();
   final TextEditingController _controlleraddress = TextEditingController();
@@ -69,13 +70,14 @@ class addstudent extends StatefulWidget {
                     ),
                     TextFormField(
                       controller: _controllername,
+                      textCapitalization: TextCapitalization.words,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0)),
                           labelText: 'Student Name'),
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'enter name';
+                        if (value == null || value.isEmpty ||value.length < 3 || num.tryParse(value) != null) {
+                          return 'Enter Name';
                         }
                         return null;
                       },
@@ -87,11 +89,12 @@ class addstudent extends StatefulWidget {
                     TextFormField(
                       keyboardType: TextInputType.number,
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          if (value == null || value.isEmpty || num.tryParse(value) == null) {
                             return ' enter age';
                           }
                           return null;
                         },
+                        maxLength: 2,
                         controller: _controllerage,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -102,9 +105,10 @@ class addstudent extends StatefulWidget {
                       height: 10,
                     ),
                     TextFormField(
+                      textCapitalization: TextCapitalization.characters,
                         validator: (value) {
                           if (value == null || value.isEmpty||num.tryParse(value) != null) {
-                            return 'enter address';
+                            return 'enter Batch';
                           }
                           return null;
                         },
@@ -112,7 +116,7 @@ class addstudent extends StatefulWidget {
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15.0)),
-                            labelText: 'Adrress')),
+                            labelText: 'Batch')),
                     const SizedBox(
                       height: 10,
                     ),
@@ -142,10 +146,10 @@ class addstudent extends StatefulWidget {
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0)),
-                          labelText: 'Pincode'),
+                          labelText: 'Student code'),
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'enter pincode';
+                        if (value == null || value.isEmpty|| num.tryParse(value) == null) {
+                          return 'enter Student code';
                         }
                         return null;
                       },
@@ -159,8 +163,7 @@ class addstudent extends StatefulWidget {
                           checkdata();
                         }
                       },
-                      label: const Text('submit'),
-                      icon: const Icon(Icons.add),
+                      label: const Text('Save'),
                     )
                   ],
                 ),
@@ -194,7 +197,7 @@ class addstudent extends StatefulWidget {
       Navigator.of(context).pop();
       await getdata();
     } catch (e) {
-      print('`error$e');
+      log('`error$e');
     }
   }
 

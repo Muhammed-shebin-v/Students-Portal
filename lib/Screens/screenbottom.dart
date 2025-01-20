@@ -25,14 +25,14 @@ class _MyWidgetState extends State<Bottom> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 154, 206, 248),
-        title: const Text('Student Portal'),
+        title: const Text('Student Portal',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
         centerTitle: true,
         foregroundColor: Colors.white,
         actions: [
           IconButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const addstudent()));
+                    builder: (context) => const AddStudent()));
               },
               icon: const Icon(Icons.add)),
           IconButton(
@@ -138,7 +138,7 @@ class _MyWidgetState extends State<Bottom> {
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) =>
-                                      screeninfo(data: student)));
+                                      ScreenInfo(data: student)));
                             });
                       },
                     );

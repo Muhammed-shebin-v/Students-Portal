@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -16,11 +17,11 @@ class Screenupdate extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<Screenupdate> {
-  TextEditingController _controllername = TextEditingController();
-  TextEditingController _controllerage = TextEditingController();
-  TextEditingController _controlleraddress = TextEditingController();
-  TextEditingController _controllerphonenumber = TextEditingController();
-  TextEditingController _controllerpincode = TextEditingController();
+  final TextEditingController _controllername = TextEditingController();
+  final TextEditingController _controllerage = TextEditingController();
+  final TextEditingController _controlleraddress = TextEditingController();
+  final TextEditingController _controllerphonenumber = TextEditingController();
+  final TextEditingController _controllerpincode = TextEditingController();
 
   @override
   void initState() {
@@ -90,6 +91,7 @@ class _MyWidgetState extends State<Screenupdate> {
                       height: 20,
                     ),
                     TextFormField(
+                       textCapitalization: TextCapitalization.words,
                       controller: _controllername,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -110,6 +112,7 @@ class _MyWidgetState extends State<Screenupdate> {
                       height: 10,
                     ),
                     TextFormField(
+                       textCapitalization: TextCapitalization.characters,
                         controller: _controlleraddress,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -135,7 +138,7 @@ class _MyWidgetState extends State<Screenupdate> {
                           labelText: widget.data.pin),
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 50,
                     ),
                     ElevatedButton.icon(
                       onPressed: () {
@@ -143,8 +146,7 @@ class _MyWidgetState extends State<Screenupdate> {
                         getdata();
                         Navigator.of(context).pop();
                       },
-                      label: const Text('edit'),
-                      icon: const Icon(Icons.add),
+                      label: const Text('Save'),
                     )
                   ],
                 ),
@@ -169,7 +171,7 @@ class _MyWidgetState extends State<Screenupdate> {
         _imageBytes = widget.data.image;
       }
 
-      final _data=StudentModel(
+      final data=StudentModel(
         name: name, 
         age: age, 
         address: address, 
@@ -178,11 +180,11 @@ class _MyWidgetState extends State<Screenupdate> {
         image:_imageBytes,
         id: widget.data.id
         );
-      await update(_data);
+      await update(data);
     
       
     } catch (e) {
-      print('`error$e');
+      log('`error$e');
     }
   }
   Future<void> pickImageFromGallery() async {

@@ -42,7 +42,6 @@ VALUES(?,?,?,?,?,?)''',
 }
 Future<void>getdata()async{
   final _values=await _db.rawQuery('SELECT * FROM student');
-  print(_values);
   studentListNotifier.value.clear();
   _values.forEach((map){
     final student=StudentModel.fromMap(map);

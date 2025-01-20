@@ -1,19 +1,22 @@
+import 'dart:developer';
+
 import 'package:database/db/functions/function.dart';
 import 'package:database/db/models/model.dart';
 import 'package:database/Screens/screenupdate.dart';
 import 'package:flutter/material.dart';
 
 
-class screeninfo extends StatefulWidget {
+
+class ScreenInfo extends StatefulWidget {
   final StudentModel data;
-  const screeninfo({super.key, required this.data});
+  const ScreenInfo({super.key, required this.data});
 
 
   @override
-  State<screeninfo> createState() => _MyWidgetState();
+  State<ScreenInfo> createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<screeninfo> {
+class _MyWidgetState extends State<ScreenInfo> {
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +40,9 @@ class _MyWidgetState extends State<screeninfo> {
                 valueListenable: studentListNotifier,
                 builder: (context,List<StudentModel> studentList,_) {
                   final updatedStudent = studentList.singleWhere((student)=> student.id == widget.data.id);
-                  print(updatedStudent.name);
+                  log(updatedStudent.name);
                 return Column(
+                  
                   children: [
                     const SizedBox(
                       height: 70,
@@ -70,7 +74,7 @@ class _MyWidgetState extends State<screeninfo> {
                       height: 10,
                     ),
                     Text(
-                      'Address: ${updatedStudent.address}',
+                      'Batch: ${updatedStudent.address}',
                       style: const TextStyle(fontSize: 20),
                     ),
                     const SizedBox(
@@ -84,7 +88,7 @@ class _MyWidgetState extends State<screeninfo> {
                       height: 10,
                     ),
                     Text(
-                      'Pincode: ${updatedStudent.pin}',
+                      'Student code: ${updatedStudent.pin}',
                       style: const TextStyle(fontSize: 20),
                     ),
                     const SizedBox(
@@ -119,8 +123,8 @@ class _MyWidgetState extends State<screeninfo> {
                                      title: const Text('Delete'),
                                      content: const Text('Do you want to delete?'),
                                      actions: [
-                                       TextButton(onPressed: (){
-                                         delete(widget.data.id!);
+                                       TextButton(onPressed: () async{
+                                         await delete(widget.data.id!);
                                          Navigator.of(context).pop();
                                          Navigator.of(context).pop();
                                       }, child: const Text('Yes')),
