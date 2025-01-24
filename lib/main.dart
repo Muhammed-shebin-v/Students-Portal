@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:database/db/functions/function.dart';
+import 'package:database/db/database/function.dart';
 import 'package:database/Screens/screenbottom.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ class NewApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'database',
+      title: 'Student Portal',
       theme: ThemeData(primaryColor: Colors.black),
       home: const Bottom(),
     );

@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:database/db/functions/function.dart';
+import 'package:database/db/database/function.dart';
 import 'package:database/db/models/model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +14,12 @@ class AddStudent extends StatefulWidget {
   State<AddStudent> createState() => _MyWidgetState();
 }
 
-  class _MyWidgetState extends State<AddStudent> {
+class _MyWidgetState extends State<AddStudent> {
   final TextEditingController _controllername = TextEditingController();
   final TextEditingController _controllerage = TextEditingController();
   final TextEditingController _controlleraddress = TextEditingController();
   final TextEditingController _controllerphonenumber = TextEditingController();
   final TextEditingController _controllerpincode = TextEditingController();
-
 
   final formkey = GlobalKey<FormState>();
   File? _selectImage;
@@ -76,7 +75,10 @@ class AddStudent extends StatefulWidget {
                               borderRadius: BorderRadius.circular(15.0)),
                           labelText: 'Student Name'),
                       validator: (value) {
-                        if (value == null || value.isEmpty ||value.length < 3 || num.tryParse(value) != null) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            value.length < 3 ||
+                            num.tryParse(value) != null) {
                           return 'Enter Name';
                         }
                         return null;
@@ -87,9 +89,11 @@ class AddStudent extends StatefulWidget {
                       height: 10,
                     ),
                     TextFormField(
-                      keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.number,
                         validator: (value) {
-                          if (value == null || value.isEmpty || num.tryParse(value) == null) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              num.tryParse(value) == null) {
                             return ' enter age';
                           }
                           return null;
@@ -105,9 +109,11 @@ class AddStudent extends StatefulWidget {
                       height: 10,
                     ),
                     TextFormField(
-                      textCapitalization: TextCapitalization.characters,
+                        textCapitalization: TextCapitalization.characters,
                         validator: (value) {
-                          if (value == null || value.isEmpty||num.tryParse(value) != null) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              num.tryParse(value) != null) {
                             return 'enter Batch';
                           }
                           return null;
@@ -123,14 +129,15 @@ class AddStudent extends StatefulWidget {
                     TextFormField(
                       keyboardType: TextInputType.phone,
                       maxLength: 10,
-                      
                       controller: _controllerphonenumber,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0)),
                           labelText: 'Phone Number'),
                       validator: (value) {
-                        if (value == null || value.isEmpty||num.tryParse(value) == null) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            num.tryParse(value) == null) {
                           return 'enter number';
                         }
                         return null;
@@ -148,7 +155,9 @@ class AddStudent extends StatefulWidget {
                               borderRadius: BorderRadius.circular(15.0)),
                           labelText: 'Student code'),
                       validator: (value) {
-                        if (value == null || value.isEmpty|| num.tryParse(value) == null) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            num.tryParse(value) == null) {
                           return 'enter Student code';
                         }
                         return null;
@@ -180,7 +189,7 @@ class AddStudent extends StatefulWidget {
       final address = _controlleraddress.text.trim();
       final phonenumber = _controllerphonenumber.text.trim();
       final pincode = _controllerpincode.text.trim();
-      
+
       if (_selectImage != null) {
         _imageBytes = await _selectImage!.readAsBytes();
       }
@@ -204,10 +213,10 @@ class AddStudent extends StatefulWidget {
   Future<void> pickImageFromGallery() async {
     final returnImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-         if (returnImage != null) {
-    setState(() {
-      _selectImage = File(returnImage.path);
-    });
-         }
+    if (returnImage != null) {
+      setState(() {
+        _selectImage = File(returnImage.path);
+      });
+    }
   }
 }

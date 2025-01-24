@@ -4,13 +4,12 @@ import 'dart:typed_data';
 
 import 'package:database/db/models/model.dart';
 import 'package:flutter/material.dart';
-import 'package:database/db/functions/function.dart';
+import 'package:database/db/database/function.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Screenupdate extends StatefulWidget {
   const Screenupdate({super.key, required this.data});
   final StudentModel data;
-
 
   @override
   State<Screenupdate> createState() => _MyWidgetState();
@@ -32,6 +31,7 @@ class _MyWidgetState extends State<Screenupdate> {
     _controllerpincode.text = widget.data.pin;
     super.initState();
   }
+
   File? _selectImage;
   Uint8List? _imageBytes;
   @override
@@ -53,29 +53,37 @@ class _MyWidgetState extends State<Screenupdate> {
                 ),
                 child: Column(
                   children: [
-                     InkWell(
-                      onTap: (){
-                        showDialog(context: context, builder: (ctx){
-                          return AlertDialog(
-                            title: const Text('Edit profile picture'),
-                            shadowColor: Colors.black,
-                            actions: [
-                              TextButton(onPressed: (){
-                                deleteImage(widget.data.id!);
-                                // Navigator.of(context).pop();
-                              }, child: const Text('Remove profile')),
-                              TextButton(onPressed: (){
-                                   pickImageFromGallery();
-                              }, child: const Text('Choose photo'))
-                            ],
-                          );
-                        });
-                      
+                    InkWell(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (ctx) {
+                              return AlertDialog(
+                                title: const Text('Edit profile picture'),
+                                shadowColor: Colors.black,
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        deleteImage(widget.data.id!);
+                                        // Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Remove profile')),
+                                  TextButton(
+                                      onPressed: () {
+                                        pickImageFromGallery();
+                                      },
+                                      child: const Text('Choose photo'))
+                                ],
+                              );
+                            });
                       },
-                       child: CircleAvatar(
+                      child: CircleAvatar(
                           radius: 70,
-                          backgroundColor: const Color.fromARGB(255, 179, 218, 250),
-                          backgroundImage: widget.data.image != null ? MemoryImage(widget.data.image!): null,
+                          backgroundColor:
+                              const Color.fromARGB(255, 179, 218, 250),
+                          backgroundImage: widget.data.image != null
+                              ? MemoryImage(widget.data.image!)
+                              : null,
                           child: _selectImage != null
                               ? ClipOval(
                                   child: Image.file(
@@ -84,14 +92,14 @@ class _MyWidgetState extends State<Screenupdate> {
                                     width: 140,
                                     fit: BoxFit.cover,
                                   ),
-                                ):const Text('')
-                          ),
-                     ),
+                                )
+                              : const Text('')),
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
                     TextFormField(
-                       textCapitalization: TextCapitalization.words,
+                      textCapitalization: TextCapitalization.words,
                       controller: _controllername,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -112,7 +120,7 @@ class _MyWidgetState extends State<Screenupdate> {
                       height: 10,
                     ),
                     TextFormField(
-                       textCapitalization: TextCapitalization.characters,
+                        textCapitalization: TextCapitalization.characters,
                         controller: _controlleraddress,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -163,38 +171,34 @@ class _MyWidgetState extends State<Screenupdate> {
       final address = _controlleraddress.text.trim();
       final phone = _controllerphonenumber.text.trim();
       final pin = _controllerpincode.text.trim();
-      
 
       if (_selectImage != null) {
         _imageBytes = await _selectImage!.readAsBytes();
-      } else if (_imageBytes == null && widget.data.image != null) {  
+      } else if (_imageBytes == null && widget.data.image != null) {
         _imageBytes = widget.data.image;
       }
 
-      final data=StudentModel(
-        name: name, 
-        age: age, 
-        address: address, 
-        phone: phone, 
-        pin: pin,
-        image:_imageBytes,
-        id: widget.data.id
-        );
+      final data = StudentModel(
+          name: name,
+          age: age,
+          address: address,
+          phone: phone,
+          pin: pin,
+          image: _imageBytes,
+          id: widget.data.id);
       await update(data);
-    
-      
     } catch (e) {
       log('`error$e');
     }
   }
+
   Future<void> pickImageFromGallery() async {
     final returnImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-         if (returnImage != null) {
-    setState(() {
-      _selectImage = File(returnImage.path);
-    });
-         }
+    if (returnImage != null) {
+      setState(() {
+        _selectImage = File(returnImage.path);
+      });
+    }
   }
-  
 }

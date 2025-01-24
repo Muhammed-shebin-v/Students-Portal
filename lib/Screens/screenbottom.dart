@@ -1,5 +1,5 @@
 import 'package:database/Screens/info.dart';
-import 'package:database/db/functions/function.dart';
+import 'package:database/db/database/function.dart';
 
 import 'package:database/Screens/screenadd.dart';
 import 'package:database/Screens/screengrid.dart';
@@ -25,7 +25,10 @@ class _MyWidgetState extends State<Bottom> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 154, 206, 248),
-        title: const Text('Student Portal',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+        title: const Text(
+          'Student Portal',
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         foregroundColor: Colors.white,
         actions: [
